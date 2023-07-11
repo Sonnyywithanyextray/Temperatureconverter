@@ -1,36 +1,34 @@
 public class Q14again {
-    public static void main (String [] args) {
-        In opener = new In ("temperature.txt");
-        Out closer = new Out ("normalized-temperature.txt");
+    public static void main(String[] args) {
+        In opener = new In("temperature.txt");
+        Out closer = new Out("normalized-temperature.txt");
 
-        String [] nums = null;
-        String [] chars = null;
-        double [] nums2 = new double [nums.length];
-     
+        float[] nums = null;
+        String[] chars = null;
 
         while (!opener.isEmpty()) {
             String line = opener.readLine();
-            String [] parts = line.split(" ");
+            String[] parts = line.split(" ");
 
-            int numcount=0;
+            int numcount = 0;
 
-            for (int i = 0; i<parts.length; i++) {
-                if (parts[i].equalsIgnoreCase("C")||parts[i].equalsIgnoreCase("F"))
-                numcount++;
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i].equalsIgnoreCase("C") || parts[i].equalsIgnoreCase("F"))
+                    numcount++;
             }
 
-            nums = new String [numcount];
+            nums = new float[numcount];
             chars = new String[numcount];
 
-            int a =0;
-            int b =0;
-            for (int i =0; i<parts.length; i++) {
-                if (parts[i].equalsIgnoreCase("C")||parts[i].equalsIgnoreCase("F")) {
+            int a = 0;
+            int b = 0;
+
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i].equalsIgnoreCase("C") || parts[i].equalsIgnoreCase("F")) {
                     chars[a] = parts[i];
                     a++;
-                }
-                else {
-                    nums[b] = parts[i];
+                } else {
+                    nums[b] = Float.parseFloat(parts[i]);
                     b++;
                 }
             }
@@ -40,7 +38,7 @@ public class Q14again {
             int Ccounter = 0;
             int Fcounter = 0;
 
-            for (int i =0; i<parts.length; i++) {
+            for (int i = 0; i < parts.length; i++) {
                 if (parts[i].equals("C")) {
                     Ccounter++;
                 }
@@ -48,23 +46,37 @@ public class Q14again {
                     Fcounter++;
                 }
             }
-            if (Ccounter>Fcounter) {
-                b=0;
-                for (int i = 0; i<nums2.length; i++) {
-                    if (parts[i].equals("F")) {
-                        double newval = Double.parseDouble(nums[b]);
-                        nums2[i] = newval;
-                        double newval2 = (newval-32) *0.55555556;
-                        double c = newval2;
+            double[] nums2 = new double[nums.length];
 
-                        closer.print(c + " " + "C ");
-                        b++;
+            if (Ccounter > Fcounter) {
+                System.out.println("Celsius");
+                for (int i = 0; i < nums.length; i++) {
+                    if (chars[i].equals("F")) {
+                        nums2[i] = (int) ((nums[i] - 32) * 5 / 9);
+                    } else {
+                        nums2[i] = (int) nums[i];
                     }
-                    }
+                    closer.printf(nums2[i] + " " + "C " + " ");
+
                 }
+            } else {
+                System.out.println("Farenheit");
+                for (int i = 0; i < nums.length; i++) {
+                    if (chars[i].equals("C")) {
+                        nums2[i] = (int) (nums[i] * 9 / 5 + 32);
+                    } else {
+                        nums2[i] = (int) nums[i];
+                    }
+                    closer.printf(nums2[i] + " " + "F " + " ");
+                }
+            }
+
+            
             }
         }
     }
+
+
 
 
 
